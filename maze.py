@@ -5,6 +5,7 @@ def neighbors(cell):
   return [[cell[0] + x, cell[1]] for x in [-1, 1]] + [[cell[0], cell[1] + x] for x in [-1, 1]]
 
 def generateMaze(size, start=1):
+  #randomized prim's algorithm
   wlist = []
   maze = [['u' for y in range(size + 2)] for x in range(size + 2)]
   maze[start][start] = 'c'
@@ -12,7 +13,6 @@ def generateMaze(size, start=1):
   for x in neighbors([start, start]):
     wlist.append([x[0], x[1]])
 
-  #randomized prim's algorithm
   while wlist:
     randWall = random.choice(wlist)
     if 0 < randWall[0] < size + 1 and 0 < randWall[1] < size + 1:
@@ -40,5 +40,5 @@ def generateMaze(size, start=1):
       else:
         maze[y][z] = 1
 
-  end = random.choice([i for i in range(size+1)[1:-1] if [maze[x[0]][x[1]] for x in neighbors([-2, i])].count(True) < 2])
+  end = random.choice([i for i in range(size + 1)[1:-1] if maze[-2][i-1] != maze[-2][i+1]])
   return maze, [start, start], [size, end]
