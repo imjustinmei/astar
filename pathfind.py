@@ -1,7 +1,8 @@
 from maze import *
 import matplotlib.pyplot as plt
+from matplotlib.colors import ListedColormap
 
-size = 20
+size = 50
 
 def aStar(maze, start, end):
   queue = [end + [0]]
@@ -16,7 +17,6 @@ def aStar(maze, start, end):
       return path
     
     neighbor = [x + [current[2]+1] for x in neighbors(current[:-1])]
-    
     for x in list(neighbor):
       if maze[x[0]][x[1]] == 0 or x[:-1] in [x[:-1] for x in queue]:
         neighbor.remove(x)
@@ -25,12 +25,12 @@ def aStar(maze, start, end):
 
 if __name__ == '__main__':
   maze = generateMaze(size)
-
   path = aStar(maze[0], maze[1], maze[2])
   for x in path:
     maze[0][x[0]][x[1]] = 2
-  maze[0][1][1] = maze[0][-2][maze[2][1]] = 3
+  maze[0][-2][maze[2][1]] = 3
+  maze[0][1][1] = 4
 
-  plt.imshow(maze[0])
+  plt.imshow(maze[0], cmap=ListedColormap(['k', 'w', '#99d9ea', '#ed1c24', '#22b14c']))
   plt.axis('off')
   plt.show()
