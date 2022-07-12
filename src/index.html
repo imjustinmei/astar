@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Pathfinding</title>
+    <link rel="icon" type="image/x-icon" href="../Images/favicon.png">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap"/>
+  </head>
+  <body onload="generate()">
+    <div class="top">
+      <div class="container">      
+        <p class="text">Size:</p>
+        <input type="range" min="3" max="100" value="25" id="size" class="slider">
+        <p id="sizeValue" class="text">25</p>
+      </div>
+      <div class="container">
+        <p class="text">Speed:</p>
+        <input type="range" min="1" max="100" value="50" id="speed" class="slider">
+        <p id="speedValue" class="text">50</p>
+      </div>
+      <div class="buttons">
+        <button onclick="generate()" class="button">Generate</button>
+        <button onclick="animateMaze(true)" class="button">Visualize</button>
+        <button onclick="animateMaze(false)" class="button">Pathfind</button>
+      </div>
+    </div>
+    <div id="maze"></div>
+    <script src="./js/maze.js"></script>
+    <script src="./js/pathfind.js"></script>
+	  <script src="./js/index.js"></script>
+  </body>
+</html>
