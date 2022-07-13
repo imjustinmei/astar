@@ -11,15 +11,23 @@ speed.oninput = () => {
   speedValue.innerHTML = speed.value;
 };
 
-let newMaze = false;
+let newMaze = (generating = false);
 async function generate() {
   newMaze = true;
+  if (generating) {
+    return;
+  }
   let currentSize = parseInt(size.value);
   let [mazeArray, startCell, endCell] = generateMaze(currentSize);
   let [path, queue] = aStar(mazeArray, startCell, endCell);
 
   sessionStorage.path = JSON.stringify(path);
   sessionStorage.queue = JSON.stringify(queue);
+
+  generating = true;
+  setTimeout(() => {
+    generating = false;
+  }, currentSize * 8);
 
   let maze = document.getElementById('maze');
   maze.innerHTML = '';
