@@ -17,17 +17,13 @@ async function generate() {
   if (generating) {
     return;
   }
+  generating = true;
   let currentSize = parseInt(size.value);
   let [mazeArray, startCell, endCell] = generateMaze(currentSize);
   let [path, queue] = aStar(mazeArray, startCell, endCell);
 
   sessionStorage.path = JSON.stringify(path);
   sessionStorage.queue = JSON.stringify(queue);
-
-  generating = true;
-  setTimeout(() => {
-    generating = false;
-  }, currentSize * 8);
 
   let maze = document.getElementById('maze');
   maze.innerHTML = '';
@@ -52,6 +48,7 @@ async function generate() {
   start.classList.add('start');
   let end = document.getElementById(String(path[path.length - 1][0]) + ',' + String(path[path.length - 1][1]));
   end.classList.add('end');
+  generating = false;
 }
 
 async function animateMaze(demonstration) {
