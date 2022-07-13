@@ -1,9 +1,13 @@
-# A* Python
-Implementation of A* algorithm displayed with matplotlib
+# A\* Python
+
+Implementation of A\* algorithm displayed with matplotlib
 
 Maze generated with [randomized Prim's algorithm](https://en.wikipedia.org/wiki/Maze_generation_algorithm#:~:text=easy%20to%20solve.-,Randomized%20Prim%27s%20algorithm,-%5Bedit%5D)
 
+Animated example [here](https://imjustinmei.github.io/astar/)
+
 ---
+
 <div align="center">
   <table style="width:100%">
     <tr>
