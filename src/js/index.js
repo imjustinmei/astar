@@ -39,7 +39,7 @@ async function generate() {
       row.appendChild(cell);
     }
     maze.appendChild(row);
-    let current = new Promise((resolve) => setTimeout(resolve, 8));
+    let current = new Promise((resolve) => setTimeout(resolve, 4));
     await current;
   }
 
