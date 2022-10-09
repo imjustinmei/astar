@@ -42,13 +42,15 @@ async function generate() {
     await new Promise((resolve) => setTimeout(resolve, 2));
   }
 
-  let [path, queue] = aStar(mazeArray, startCell, endCell);
+  setTimeout(() => {
+    let [path, queue] = aStar(mazeArray, startCell, endCell);
 
-  sessionStorage.setItem('pathfind', JSON.stringify({ path: path, queue: queue }));
+    sessionStorage.setItem('pathfind', JSON.stringify({ path: path, queue: queue }));
 
-  clone = maze.cloneNode(true);
-  newMaze = true;
-  animating = false;
+    newMaze = true;
+    clone = maze.cloneNode(true);
+    animating = false;
+  }, 0);
 }
 
 async function animateMaze(demonstration) {
