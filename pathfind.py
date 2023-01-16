@@ -1,8 +1,10 @@
-from maze import *
+from maze import generateMaze
 import matplotlib.pyplot as plt
 from matplotlib.colors import ListedColormap
 
 size = 50
+def neighbors(cell):
+    return [[cell[0] + x, cell[1]] for x in [-1, 1]] + [[cell[0], cell[1] + x] for x in [-1, 1]]
 
 def aStar(maze, start, end):
     queue = [end + [0]]
