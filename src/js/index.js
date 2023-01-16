@@ -58,26 +58,30 @@ async function animateMaze(demonstration) {
   animating = true;
 
   if (!newMaze) maze.innerHTML = clone.innerHTML;
-
-  let animationSpeed = speed.value / 2;
+  let s = performance.now();
+  let animationSpeed = speed.value;
   let { path, queue } = JSON.parse(sessionStorage.getItem('pathfind'));
+  let count = 0;
 
   // demonstration
   if (demonstration) {
     for (let c of queue.slice(1, queue.length)) {
       if (String(c[0]) + ',' + String(c[1]) == '1,1') break;
+      count++;
 
       let cell = document.getElementById(String(c[0]) + ',' + String(c[1]));
       cell.style.backgroundColor = 'hsl(12, 65%, ' + (95 - (20 * c[2]) / path.length) + '%)';
-      await new Promise((resolve) => setTimeout(resolve, 5 / animationSpeed));
+      await new Promise((resolve) => setTimeout(resolve, 5 - 0.04 * speed.value));
     }
   }
-
+  console.log(count);
+  let d = performance.now();
+  console.log((d - s) / 1000);
   // final path
   for (let c of path.slice(1, path.length - 1)) {
     let pathCell = document.getElementById(String(c[0]) + ',' + String(c[1]));
     pathCell.style.backgroundColor = 'hsl(193, 66%, ' + (76 + (19 * c[2]) / path.length) + '%)';
-    await new Promise((resolve) => setTimeout(resolve, 75 - animationSpeed));
+    await new Promise((resolve) => setTimeout(resolve, 75 - animationSpeed / 2));
   }
 
   animating = newMaze = false;

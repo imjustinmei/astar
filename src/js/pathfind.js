@@ -1,3 +1,10 @@
+function neighbors(cell) {
+  let neighbor = [];
+  for (let value of [-1, 1]) neighbor.push([cell[0] + value, cell[1]]);
+  for (let value of [-1, 1]) neighbor.push([cell[0], cell[1] + value]);
+  return neighbor;
+}
+
 function aStar(maze, start, end) {
   let queue = [[...end, 0]];
   let i = 0;
