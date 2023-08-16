@@ -4,7 +4,7 @@ const speed = document.getElementById('speed');
 const speedValue = document.getElementById('speedValue');
 const maze = document.getElementById('maze');
 
-let animating = (newMaze = false);
+let animating = newMaze = false;
 let clone;
 
 ['size', 'speed'].map((e) => {
@@ -16,7 +16,6 @@ let clone;
 
 async function generate() {
   if (animating) return;
-
   animating = true;
   maze.innerHTML = '';
 
@@ -30,17 +29,17 @@ async function generate() {
 
     for (let j = 0; j < currentSize + 2; j++) {
       let cell = document.createElement('div');
-      cell.className = mazeArray[i][j] == 1 ? '' : 'wall';
-      cell.classList.add('cell');
+      cell.className = "cell";
+      if (mazeArray[i][j] != 1) cell.classList.add('wall');
       cell.id = String(i) + ',' + String(j);
 
-      if (cell.id == '1,1') cell.classList.add('start');
-      if (cell.id == endCell[0] + ',' + endCell[1]) cell.classList.add('end');
       row.appendChild(cell);
     }
     maze.appendChild(row);
-    await new Promise((resolve) => setTimeout(resolve, 2));
+    if (i % 4 == 0) await new Promise((resolve) => setTimeout(resolve, 1));
   }
+  document.getElementById('1,1').classList.add('start')
+  document.getElementById(endCell[0] + ',' + endCell[1]).classList.add('end')
 
   setTimeout(() => {
     let [path, queue] = aStar(mazeArray, startCell, endCell);
@@ -58,30 +57,27 @@ async function animateMaze(demonstration) {
   animating = true;
 
   if (!newMaze) maze.innerHTML = clone.innerHTML;
-  let s = performance.now();
   let animationSpeed = speed.value;
   let { path, queue } = JSON.parse(sessionStorage.getItem('pathfind'));
-  let count = 0;
 
   // demonstration
   if (demonstration) {
+    let count = 0;
     for (let c of queue.slice(1, queue.length)) {
       if (String(c[0]) + ',' + String(c[1]) == '1,1') break;
       count++;
 
       let cell = document.getElementById(String(c[0]) + ',' + String(c[1]));
       cell.style.backgroundColor = 'hsl(12, 65%, ' + (95 - (20 * c[2]) / path.length) + '%)';
-      await new Promise((resolve) => setTimeout(resolve, 5 - 0.04 * speed.value));
+      if (count % animationSpeed == 0) await new Promise((resolve) => setTimeout(resolve, 9 - animationSpeed));
     }
   }
-  console.log(count);
-  let d = performance.now();
-  console.log((d - s) / 1000);
+
   // final path
   for (let c of path.slice(1, path.length - 1)) {
     let pathCell = document.getElementById(String(c[0]) + ',' + String(c[1]));
     pathCell.style.backgroundColor = 'hsl(193, 66%, ' + (76 + (19 * c[2]) / path.length) + '%)';
-    await new Promise((resolve) => setTimeout(resolve, 75 - animationSpeed / 2));
+    await new Promise((resolve) => setTimeout(resolve, 15));
   }
 
   animating = newMaze = false;
